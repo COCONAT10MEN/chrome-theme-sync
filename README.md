@@ -1,6 +1,8 @@
 <div align="center">
 
-# chrome-theme-sync
+<img src="assets/icon.svg" width="80" alt="Chrome Theme Sync icon" />
+
+# Chrome Theme Sync
 
 [![Caelestia KDE](https://img.shields.io/badge/Caelestia_KDE-2.7.6_tested-9bd0cc?style=for-the-badge&labelColor=101418)](https://github.com/caelestia-kde/caelestia)
 [![KDE Plasma](https://img.shields.io/badge/Plasma_6-1D99F3?logo=kde&logoColor=white&style=for-the-badge&labelColor=101418)](https://kde.org/plasma-desktop)
@@ -9,73 +11,71 @@
 
 </div>
 
-> [!NOTE]
-> ✅ **Tested and working on Caelestia KDE 2.7.6** (Plasma 6.8.3, Google Chrome 158).
+> ✅ Tested and working on Caelestia KDE 2.7.6 (Plasma 6.8.3, Chrome 158).
 
-Your browser follows your Caelestia colours. Change the wallpaper or the scheme and Chrome
-repaints itself about a second later. No restart, no extension.
+A Caelestia plugin that makes Google Chrome use the colours of your current scheme. When you
+change your wallpaper or scheme, Chrome updates within a second or so. Chromium and Brave are
+supported too.
 
-Works with Google Chrome, Chromium and Brave, whichever you have.
-
-Why this exists: stock Caelestia's CLI has Chrome theming built in, but Caelestia KDE never
-calls it. So Chrome gets stuck on whatever colour it got last time (often a bluish one), and
-when the old code does run, a broken `chrome-flags.conf` can make it open a pile of junk tabs.
-This plugin does the job properly from the shell.
+Caelestia's CLI already has code for theming Chrome, but Caelestia KDE never runs it, so Chrome
+ends up stuck on whatever colour it was given last. This plugin does it from the shell instead.
 
 ## Install
 
-Grab the zip from the [latest release](https://github.com/COCONAT10MEN/chrome-theme-sync/releases/latest), unzip it and double-click
-**Install** inside. That's it.
+Download the zip from the [latest release](https://github.com/COCONAT10MEN/chrome-theme-sync/releases/latest),
+unzip it and double-click **Install**.
 
-Or paste this into Caelestia's *Settings → Plugins*:
+You can also paste this into Caelestia's *Settings → Plugins*:
 
 ```
 https://github.com/COCONAT10MEN/chrome-theme-sync
 ```
 
-The first time it runs it needs your admin password once (a normal password prompt), because
-browsers only take theme colours from a system folder. After that it's silent.
-
-If you cancel the prompt, it leaves things alone. Turn the plugin off and on to get asked again.
+The first time it runs you'll get a password prompt. Chrome only reads theme colours from a
+system folder, so the plugin needs admin rights once to set that up. If you cancel, nothing is
+changed. Turn the plugin off and on again to get the prompt back.
 
 ## Settings
 
-In *Settings → Plugins → Chrome Theme Sync*:
+There's one option, **Browser colour**:
 
-- **Background** (default) matches the desktop: dark, subtle, same tone as your panels.
-- **Accent** uses your scheme's main colour instead. Louder, but fun.
+- **Background** (default) uses the same dark tone as your panels.
+- **Accent** uses your scheme's main colour instead.
 
-## Good to know
+## Notes
 
-- Chrome will say "Your browser is managed by your organization". That's just how Chrome
-  labels anything set from the system folder. Nothing else is managed, it's only the colour.
-- Light/dark follows your system too.
-- While Chrome is themed this way, its own colour picker is locked. Uninstall to get it back.
+- Chrome will say "Your browser is managed by your organization". That's how Chrome labels
+  anything set from that system folder. The colour is the only thing being set.
+- Light and dark mode follow your system setting.
+- Chrome's own colour picker is locked while the plugin is installed.
+
+## Updates
+
+The plugin checks for new releases about once a day, and again after Caelestia updates. When
+there's one you get a notification where you can update or skip it, and there's an update
+button on the plugin in *Settings → Plugins*. It never updates without asking, and you can undo
+an update right after installing it.
 
 ## Uninstall
 
-Remove it in *Settings → Plugins*, then run this once to take the colour off your browser and
-clean up the admin bits:
+Run this first. It removes the colour from your browser and the admin helper:
 
 ```bash
 sudo sh ~/.config/caelestia/plugins/chrome-theme-sync/helper/setup.sh uninstall
 ```
 
-(Run it before removing the plugin folder, or grab `helper/setup.sh` from this repo.)
+Then remove the plugin in *Settings → Plugins*.
 
-## What it installs
+## What it adds outside the plugin folder
 
-Just two small things outside the plugin folder:
-
-- `/usr/local/libexec/caelestia-chrome-theme`, a tiny script that writes the colour file. It
-  only accepts a hex colour, nothing else.
+- `/usr/local/libexec/caelestia-chrome-theme`, a small script that writes the colour file. It
+  only accepts a hex colour.
 - `/etc/sudoers.d/caelestia-chrome-theme`, which lets your user run that one script without a
   password.
-
-The colour itself goes in `/etc/opt/chrome/policies/managed/caelestia.json` (Chromium and
-Brave have their own `/etc/...` folders).
+- The colour itself, in `/etc/opt/chrome/policies/managed/caelestia.json` (Chromium and Brave
+  use `/etc/chromium/...` and `/etc/brave/...`).
 
 ## License
 
-MIT. Free to use, change and share. If you build on it, a credit to
-[COCONAT10MEN](https://github.com/COCONAT10MEN) is appreciated.
+MIT. You're free to use, change and share it. If you build something on top of it, please
+credit [COCONAT10MEN](https://github.com/COCONAT10MEN).
