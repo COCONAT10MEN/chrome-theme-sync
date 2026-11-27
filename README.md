@@ -20,6 +20,12 @@ supported too.
 Caelestia's CLI already has code for theming Chrome, but Caelestia KDE never runs it, so Chrome
 ends up stuck on whatever colour it was given last. This plugin does it from the shell instead.
 
+![Switching schemes in Caelestia while Chrome follows along](assets/media/theme-sync.webp)
+
+Switching schemes: Chrome changes colour about a second later, along with everything else.
+
+![Chrome in four different schemes](assets/media/theme-sync-schemes.jpg)
+
 ## Install
 
 Download the zip from the [latest release](https://github.com/COCONAT10MEN/chrome-theme-sync/releases/latest),
