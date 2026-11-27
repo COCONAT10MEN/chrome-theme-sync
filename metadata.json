@@ -3,7 +3,7 @@
   "name": "Chrome Theme Sync",
   "description": "Makes Chrome, Chromium and Brave use your Caelestia colour scheme, and updates them when the scheme changes.",
   "icon": "icon.svg",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "repository": "https://github.com/COCONAT10MEN/chrome-theme-sync",
   "caelestiaTested": "2.7.6",
   "type": "quickshell",
