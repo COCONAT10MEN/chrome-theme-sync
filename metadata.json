@@ -1,0 +1,33 @@
+{
+  "id": "chrome-theme-sync",
+  "name": "Chrome Theme Sync",
+  "description": "Keeps Google Chrome, Chromium and Brave on your Caelestia colours. Change the wallpaper or scheme and the browser follows a second later, no restart.",
+  "icon": "palette",
+  "version": "1.0.0",
+  "repository": "https://github.com/COCONAT10MEN/chrome-theme-sync",
+  "caelestiaTested": "2.7.6",
+  "type": "quickshell",
+  "ui": "main.qml",
+  "settings": [
+    {
+      "id": "colour",
+      "label": "Browser colour",
+      "type": "enum",
+      "options": ["Background", "Accent"],
+      "default": "Background"
+    }
+  ],
+  "author": {
+    "name": "COCONAT10MEN",
+    "url": "https://github.com/COCONAT10MEN"
+  },
+  "license": "MIT",
+  "keywords": [
+    "chrome",
+    "chromium",
+    "brave",
+    "browser",
+    "theme",
+    "colours"
+  ]
+}

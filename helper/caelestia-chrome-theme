@@ -1,0 +1,64 @@
+#!/bin/sh
+# Puts Caelestia's colour into the theme policy of Chrome, Chromium and Brave.
+#
+# setup.sh installs this root-owned at /usr/local/libexec/caelestia-chrome-theme
+# and lets the user run it (and only it) through sudo without a password. It
+# takes nothing but a hex colour, so that's all it can ever write.
+#
+#   caelestia-chrome-theme set '#rrggbb'   -> changed | same | none
+#   caelestia-chrome-theme clear           -> removes the policy files
+#   caelestia-chrome-theme version
+set -eu
+VERSION=1
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+umask 022
+
+ALL_DIRS="/etc/opt/chrome/policies/managed /etc/chromium/policies/managed /etc/brave/policies/managed"
+
+# Policy folders of the browsers that are installed.
+installed_dirs() {
+    if [ -x /opt/google/chrome/chrome ] || [ -x /opt/google/chrome-beta/chrome ] || [ -x /opt/google/chrome-unstable/chrome ]; then
+        echo /etc/opt/chrome/policies/managed
+    fi
+    if command -v chromium >/dev/null 2>&1; then
+        echo /etc/chromium/policies/managed
+    fi
+    if command -v brave >/dev/null 2>&1 || command -v brave-browser >/dev/null 2>&1 || [ -x /opt/brave.com/brave/brave ]; then
+        echo /etc/brave/policies/managed
+    fi
+}
+
+case "${1:-}" in
+    set)
+        colour="${2:-}"
+        printf '%s\n' "$colour" | grep -Eqx '#[0-9a-fA-F]{6}' || { echo "bad colour" >&2; exit 2; }
+        json="{\"BrowserThemeColor\": \"$colour\", \"BrowserColorScheme\": \"device\"}"
+        result=none
+        for dir in $(installed_dirs); do
+            file="$dir/caelestia.json"
+            if [ -f "$file" ] && [ "$(cat "$file")" = "$json" ]; then
+                [ "$result" = none ] && result=same
+                continue
+            fi
+            mkdir -p "$dir"
+            tmp=$(mktemp "$dir/.caelestia.XXXXXX")
+            printf '%s' "$json" > "$tmp"
+            chmod 644 "$tmp"
+            mv -f "$tmp" "$file"
+            result=changed
+        done
+        echo "$result"
+        ;;
+    clear)
+        for dir in $ALL_DIRS; do
+            rm -f "$dir/caelestia.json"
+        done
+        ;;
+    version)
+        echo "$VERSION"
+        ;;
+    *)
+        echo "usage: $0 set '#rrggbb' | clear | version" >&2
+        exit 2
+        ;;
+esac
